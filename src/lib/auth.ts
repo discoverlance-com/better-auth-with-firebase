@@ -1,8 +1,13 @@
 import { betterAuth } from "better-auth";
 import { authAdapter } from "./firebase";
+import { nextCookies } from "better-auth/next-js";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
+import { cache } from "react";
 
 export const auth = betterAuth({
   database: authAdapter,
+  plugins: [nextCookies()],
   emailAndPassword: {
     enabled: true,
     minPasswordLength: 12,
@@ -22,4 +27,14 @@ export const auth = betterAuth({
     enabled: true,
     maxAge: 15 * 60, // Cache duration in seconds
   },
+});
+
+export const requireAuthentication = cache(async () => {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (!session) {
+    redirect("/");
+  }
 });
