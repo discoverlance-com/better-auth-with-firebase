@@ -19,9 +19,9 @@ export const auth = betterAuth({
     enabled: true,
   },
   session: {
-    expiresIn: 60 * 60 * 24 * 3, // 3 days
-    updateAge: 60 * 60 * 12, // 12 hours (every 12 hours the session expiration is updated)
-    freshAge: 60 * 60 * 6, // 6 hours (the session is fresh if created within the last 6 hours)
+    expiresIn: 60 * 60 * 24 * 7, // 7 days
+    updateAge: 60 * 60 * 24, // 1 day (every 1 day the session expiration is updated)
+    freshAge: 60 * 30, // 30 minutes (the session is fresh if created within the last 30 minutes)
   },
   cookieCache: {
     enabled: true,

@@ -9,3 +9,9 @@ export const siteLinks = {
     home: "/",
   },
 };
+
+export const siteInfo = {
+  title: "Better Auth Firebase",
+  description:
+    "This project aims to test and provide a sample integration between better auth and firebase.",
+};

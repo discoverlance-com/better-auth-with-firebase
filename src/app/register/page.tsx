@@ -1,5 +1,11 @@
 import { GalleryVerticalEnd } from "lucide-react";
 import { RegisterForm } from "@/components/register-form";
+import type { Metadata } from "next";
+import { siteInfo } from "@/config/site";
+
+export const metadata: Metadata = {
+  title: "Register",
+};
 
 export default function SignUpPage() {
   return (
@@ -9,7 +15,7 @@ export default function SignUpPage() {
           <div className="bg-primary text-primary-foreground flex size-6 items-center justify-center rounded-md">
             <GalleryVerticalEnd className="size-4" />
           </div>
-          Acme Inc.
+          {siteInfo.title}
         </a>
         <RegisterForm />
       </div>
