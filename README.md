@@ -1,8 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Better Auth With Firestore
+
+This project aims to test and provide a sample integration between better auth and firebase.
+Firebase does come with it's own authentication system but it does present less controls over the authentication as you can only do what firebase makes possible or allows.
+
+This project aims to try to fix this by allowing you to setup your own authentication with [better auth](https://www.better-auth.com).
+
+**NOTE**:
+This setup means you will not be getting the benefits of security rules (firestore) integration with firebase auth since you are managing your own auth.
+Although, you could still try to create the users in firebase after adding them to better auth using something like [hooks](https://www.better-auth.com/docs/concepts/hooks). This might include you just adding the user's email to firebase auth but you will need to find a custom method to allow the firebase client sdk to work. You can try to sign in the user with firebase client sdk using `signInWithCustomToken` which requires you to generate a custom token with the admin sdk and then sending it to the client or browser for the `signInWithCustomToken` method.
+
+Or, you can just use the firebase admin sdk to perform all firestore operations. This allows you to still get the authorization benefits from better auth to perform checks before you go ahead to allow database or firebase operations.
 
 ## Getting Started
 
-First, run the development server:
+First, the packages
+
+```bash
+npm install
+# or
+yarn
+# or
+pnpm install
+# or
+bun install
+```
+
+Afterwards, add your environment variables:
+
+> You have 3 options in the `src/lib/firebase.ts` file to setup the firebase admin. If you are on GCP, you can make sure your service account attached to your instance or service has access to firebase and the firebase admin sdk will use that. In development or other platforms like local/dev/vercel, you can choose to base64 encode your service account file and set it in your environment variable as `FIREBASE_SERVICE_ACCOUNT_JSON` or add the client email, project id and private key from your firebase service account json to your environment variables (the keys for this options are in the .env.example).
+
+```bash
+cp .env.example .env # add your firebase and better auth credentials
+```
+
+Then, run the development server:
 
 ```bash
 npm run dev
@@ -18,16 +49,14 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Tools
 
-## Learn More
+The following are tools used in building this application
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- [Better Auth](https://www.better-auth.com) - custom authentication with typescript.
+- [Tailwindcss](https://tailwindcss.com/) - css utility library
+- [Firebase](https://firebase.google.com) - a saas with auth, db and more features
+- [Shadcn](https://ui.shadcn.com) - an extendable component library for react
 
 ## Deploy on Vercel
 
