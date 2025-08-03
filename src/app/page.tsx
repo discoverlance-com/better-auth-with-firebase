@@ -1,5 +1,6 @@
 import { GalleryVerticalEnd } from "lucide-react";
 import { LoginForm } from "@/components/login-form";
+import { siteInfo } from "@/config/site";
 
 export default function Home() {
   return (
@@ -9,7 +10,7 @@ export default function Home() {
           <div className="bg-primary text-primary-foreground flex size-6 items-center justify-center rounded-md">
             <GalleryVerticalEnd className="size-4" />
           </div>
-          Acme Inc.
+          {siteInfo.title}
         </a>
         <LoginForm />
       </div>
