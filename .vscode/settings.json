@@ -1,0 +1,5 @@
+{
+  "workbench.editor.customLabels.patterns": {
+    "**/{layout,page,route}.tsx": "${dirname}/${filename}"
+  }
+}
