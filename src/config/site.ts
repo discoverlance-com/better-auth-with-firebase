@@ -6,9 +6,9 @@ export const siteLinks = {
   privacyPolicy: "/privacy-policy",
   termsOfService: "/terms",
   dashoard: {
-    home: "/",
+    index: "/dashboard",
   },
-};
+} as const;
 
 export const siteInfo = {
   title: "Better Auth Firebase",

@@ -4,6 +4,7 @@ import { nextCookies } from "better-auth/next-js";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { cache } from "react";
+import { siteLinks } from "@/config/site";
 
 export const auth = betterAuth({
   database: authAdapter,
@@ -11,7 +12,7 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
     minPasswordLength: 12,
-    autoSignIn: false,
+    autoSignIn: true,
   },
   rateLimit: {
     storage: "database",
@@ -34,7 +35,21 @@ export const requireAuthentication = cache(async () => {
     headers: await headers(),
   });
 
+  console.log({ authSession: session });
+
   if (!session) {
-    redirect("/");
+    redirect(siteLinks.signin);
+  }
+});
+
+export const requireAnonymousUser = cache(async () => {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  console.log({ session });
+
+  if (session) {
+    redirect(siteLinks.dashoard.index);
   }
 });

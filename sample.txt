@@ -1,0 +1,34 @@
+## UPLOAD FILE IN SIGN UP FOR PROFILE IMAGE
+<div className="grid gap-2">
+						<Label htmlFor="image">Profile Image (optional)</Label>
+						<div className="flex items-end gap-4">
+							{imagePreview && (
+								<div className="relative w-16 h-16 rounded-sm overflow-hidden">
+									<Image
+										src={imagePreview}
+										alt="Profile preview"
+										layout="fill"
+										objectFit="cover"
+									/>
+								</div>
+							)}
+							<div className="flex items-center gap-2 w-full">
+								<Input
+									id="image"
+									type="file"
+									accept="image/*"
+									onChange={handleImageChange}
+									className="w-full"
+								/>
+								{imagePreview && (
+									<X
+										className="cursor-pointer"
+										onClick={() => {
+											setImage(null);
+											setImagePreview(null);
+										}}
+									/>
+								)}
+							</div>
+						</div>
+					</div>

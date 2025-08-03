@@ -14,9 +14,6 @@ import { siteLinks } from "@/config/site";
 import { SignUpSchema, SignUpSchemaOutput } from "@/entities/auth/validation";
 import { useForm } from "react-hook-form";
 import { valibotResolver } from "@hookform/resolvers/valibot";
-import { signUpAction } from "@/entities/auth/action";
-import { useFormAction } from "@/hooks/use-form-action";
-import type { FormActionState } from "@/types/form";
 import {
   Form,
   FormControl,
@@ -25,25 +22,48 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { SubmitButton } from "./submit-button";
-
-const initialValues: FormActionState<SignUpSchemaOutput> = {
-  errors: {},
-  values: { email: "", password: "", name: "" },
-};
+import { authClient } from "@/lib/auth-client";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
+import { Loader } from "lucide-react";
 
 export function RegisterForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
-  const [state, formAction] = useFormAction(signUpAction, initialValues);
+  const router = useRouter();
 
   const form = useForm<SignUpSchemaOutput>({
     resolver: valibotResolver(SignUpSchema),
     mode: "onBlur",
-    values: state.values,
-    errors: state.errors,
+    defaultValues: {
+      email: "",
+      name: "",
+      password: "",
+    },
   });
+
+  const onSubmit = async (values: SignUpSchemaOutput) => {
+    await authClient.signUp.email(
+      {
+        email: values.email,
+        password: values.password,
+        name: values.name,
+        callbackURL: siteLinks.dashoard.index,
+      },
+      {
+        onSuccess: (ctx) => {
+          toast.success(
+            `Welcome to Better Auth with Firebase, ${ctx.data?.user?.name}`
+          );
+          router.push(siteLinks.dashoard.index);
+        },
+        onError: (ctx) => {
+          toast.error(ctx.error.message);
+        },
+      }
+    );
+  };
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -56,7 +76,7 @@ export function RegisterForm({
         </CardHeader>
         <CardContent>
           <Form {...form}>
-            <form action={formAction}>
+            <form onSubmit={form.handleSubmit(onSubmit)}>
               <div className="grid gap-6">
                 <div className="flex flex-col gap-4">
                   <Button variant="outline" className="w-full" type="button">
@@ -141,9 +161,16 @@ export function RegisterForm({
                     )}
                   />
 
-                  <SubmitButton type="submit" className="w-full">
+                  <Button
+                    disabled={form.formState.isSubmitting}
+                    type="submit"
+                    className="w-full"
+                  >
+                    {form.formState.isSubmitting && (
+                      <Loader className="animate-spin mr-1" />
+                    )}{" "}
                     Register
-                  </SubmitButton>
+                  </Button>
                 </div>
                 <div className="text-center text-sm">
                   Already have an account?{" "}
