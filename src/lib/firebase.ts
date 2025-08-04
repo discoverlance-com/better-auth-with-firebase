@@ -56,9 +56,9 @@ function initializeFirebaseAdmin(): App {
 export const firebaseAdminApp = initializeFirebaseAdmin();
 
 // Get the Firestore instance
-const firestore = getFirestore(firebaseAdminApp);
+const firestore = getFirestore();
 
 export const authAdapter = firestoreAdapter(firestore, {
   usePlural: true, // This will use collection names like 'users', 'sessions'
-  debugLogs: false, // Only show logs in development
+  debugLogs: process.env.NODE_ENV !== "development", // Only show logs in development
 });
