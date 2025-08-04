@@ -4,6 +4,7 @@ import {
   type Query,
   DocumentSnapshot,
   FieldPath,
+  Timestamp,
 } from "firebase-admin/firestore";
 import type { BetterAuthOptions, Where } from "better-auth";
 import { createAdapter, type AdapterDebugLogs } from "better-auth/adapters";
@@ -134,9 +135,23 @@ export const firestoreAdapter = (
       // *** FIX #1: Return data with the '_id' key ***
       function extractData(doc: DocumentSnapshot) {
         if (!doc.exists) return null;
-        const data = doc.data();
+        const rawData = doc.data();
+        if (!rawData) return null;
+
+        // --- THE FIX IS HERE ---
+        // Recursively convert all Timestamp objects back to JavaScript Dates.
+        const data = Object.fromEntries(
+          Object.entries(rawData).map(([key, value]) => {
+            if (value instanceof Timestamp) {
+              return [key, value.toDate()];
+            }
+            return [key, value];
+          })
+        );
+        // --- END OF FIX ---
+
         return {
-          _id: doc.id, // Use the database-native key name
+          _id: doc.id,
           ...data,
         };
       }
