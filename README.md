@@ -63,3 +63,5 @@ The following are tools used in building this application
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fdiscoverlance-com%2Fbetter-auth-with-firebase&env=BETTER_AUTH_SECRET,BETTER_AUTH_URL,FIREBASE_SERVICE_ACCOUNT_JSON&envDescription=Environment%20variables%20needed%20for%20the%20application&envLink=https%3A%2F%2Fgithub.com%2Fdiscoverlance-com%2Fbetter-auth-with-firebase%2Fblob%2Fmain%2F.env.example&demo-title=Better%20Auth%20With%20Firebase&demo-description=A%20showcase%20of%20better%20auth%20with%20firebase&demo-url=https%3A%2F%2Fbetter-auth-with-firebase.vercel.app&demo-image=https%3A%2F%2Fgithub.com%2Fdiscoverlance-com%2Fbetter-auth-with-firebase%2Fblob%2Fmain%2Fpublic%2Fimages%2Flocalhost_3000_.png%3Fraw%3Dtrue)

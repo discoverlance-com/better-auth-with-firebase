@@ -1,6 +1,7 @@
 import { betterAuth } from "better-auth";
 import { authAdapter } from "./firebase";
 import { nextCookies } from "better-auth/next-js";
+import { oneTap } from "better-auth/plugins";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { cache } from "react";
@@ -8,11 +9,29 @@ import { siteLinks } from "@/config/site";
 
 export const auth = betterAuth({
   database: authAdapter,
-  plugins: [nextCookies()],
+  plugins: [
+    oneTap({
+      clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID as string,
+      disableSignup: false,
+    }),
+    nextCookies(),
+  ],
   emailAndPassword: {
     enabled: true,
     minPasswordLength: 12,
     autoSignIn: true,
+  },
+  account: {
+    accountLinking: {
+      enabled: true,
+      allowDifferentEmails: false,
+    },
+  },
+  socialProviders: {
+    google: {
+      clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID as string,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+    },
   },
   rateLimit: {
     storage: "database",
@@ -35,8 +54,6 @@ export const requireAuthentication = cache(async () => {
     headers: await headers(),
   });
 
-  console.log({ authSession: session });
-
   if (!session) {
     redirect(siteLinks.signin);
   }
@@ -46,8 +63,6 @@ export const requireAnonymousUser = cache(async () => {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
-
-  console.log({ session });
 
   if (session) {
     redirect(siteLinks.dashoard.index);

@@ -33,6 +33,7 @@ export const SignInSchema = v.object({
     v.string("Password must be valid text"),
     v.nonEmpty("Password is required")
   ),
+  rememberMe: v.pipe(v.boolean("Remember me must be selected or not")),
 });
 
 export type SignInSchemaOutput = v.InferOutput<typeof SignInSchema>;
