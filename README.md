@@ -11,6 +11,20 @@ Although, you could still try to create the users in firebase after adding them 
 
 Or, you can just use the firebase admin sdk to perform all firestore operations. This allows you to still get the authorization benefits from better auth to perform checks before you go ahead to allow database or firebase operations.
 
+## Prerequisites
+
+Say, you are starting a new firebase project, you can use the following steps as a guide to get started. If you already have a project you can go ahead to create the database or the composite index if you already have a database.
+
+- Create a Firebase project
+- Enable or create the default firestore database in your preferred region
+- Create a composite index on the firestore database with the following
+
+  - Collection ID: verification
+  - Fields to Index: identifier (Ascending), createdAt (Descending)
+  - Query Scope: Collection
+
+- Create a service account for local development
+
 ## Getting Started
 
 First, the packages
