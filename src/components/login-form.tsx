@@ -77,6 +77,13 @@ export function LoginForm({
     });
   };
 
+  const signInWithGithub = async () => {
+    await authClient.signIn.social({
+      provider: "github",
+      callbackURL: siteLinks.dashoard.index,
+    });
+  };
+
   useEffect(() => {
     authClient.oneTap({
       fetchOptions: {
@@ -106,7 +113,12 @@ export function LoginForm({
             <form onSubmit={form.handleSubmit(onSubmit)}>
               <div className="grid gap-6">
                 <div className="flex flex-col gap-4">
-                  <Button variant="outline" className="w-full" type="button">
+                  <Button
+                    variant="outline"
+                    className="w-full"
+                    type="button"
+                    onClick={signInWithGithub}
+                  >
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                       <path
                         fill="currentColor"

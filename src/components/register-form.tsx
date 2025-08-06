@@ -71,6 +71,13 @@ export function RegisterForm({
     });
   };
 
+  const signUpWithGithub = async () => {
+    await authClient.signIn.social({
+      provider: "github",
+      callbackURL: siteLinks.dashoard.index,
+    });
+  };
+
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
@@ -85,7 +92,12 @@ export function RegisterForm({
             <form onSubmit={form.handleSubmit(onSubmit)}>
               <div className="grid gap-6">
                 <div className="flex flex-col gap-4">
-                  <Button variant="outline" className="w-full" type="button">
+                  <Button
+                    variant="outline"
+                    className="w-full"
+                    type="button"
+                    onClick={signUpWithGithub}
+                  >
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                       <path
                         fill="currentColor"
