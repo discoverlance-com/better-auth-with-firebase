@@ -7,6 +7,10 @@ export const siteLinks = {
   termsOfService: "/terms",
   dashoard: {
     index: "/dashboard",
+    settings: {
+      index: "/dashboard/settings",
+    },
+    account: "/dashboard/account",
   },
 } as const;
 
