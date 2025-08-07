@@ -23,6 +23,7 @@ Say, you are starting a new firebase project, you can use the following steps as
   - Fields to Index: identifier (Ascending), createdAt (Descending)
   - Query Scope: Collection
 
+- Wait till the composite index status changed to Enabled. You might have to refresh the page to see changes to the status.
 - Create a service account for local development
 
 ## Getting Started

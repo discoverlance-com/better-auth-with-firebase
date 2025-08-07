@@ -5,11 +5,21 @@ import { oneTap } from "better-auth/plugins";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import { cache } from "react";
-import { siteLinks } from "@/config/site";
+import { siteInfo, siteLinks } from "@/config/site";
+import { passkey } from "better-auth/plugins/passkey";
 
 export const auth = betterAuth({
   database: authAdapter,
   plugins: [
+    passkey({
+      rpName: siteInfo.title,
+      rpID: "better-auth-with-firebase",
+      origin: process.env.BETTER_AUTH_URL,
+      authenticatorSelection: {
+        userVerification: "required",
+        residentKey: "preferred",
+      },
+    }),
     oneTap({
       clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID as string,
       disableSignup: false,

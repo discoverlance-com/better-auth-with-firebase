@@ -99,6 +99,17 @@ export function LoginForm({
       },
     });
   }, []);
+
+  useEffect(() => {
+    if (
+      !PublicKeyCredential.isConditionalMediationAvailable ||
+      !PublicKeyCredential.isConditionalMediationAvailable()
+    ) {
+      return;
+    }
+
+    void authClient.signIn.passkey({ autoFill: true });
+  }, []);
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
@@ -159,7 +170,7 @@ export function LoginForm({
                             <Input
                               required
                               type="email"
-                              autoComplete="email"
+                              autoComplete="email webauthn"
                               {...field}
                             />
                           </FormControl>
