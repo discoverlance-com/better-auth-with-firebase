@@ -13,7 +13,6 @@ export const auth = betterAuth({
   plugins: [
     passkey({
       rpName: siteInfo.title,
-      rpID: "better-auth-with-firebase",
       origin: process.env.BETTER_AUTH_URL,
       authenticatorSelection: {
         userVerification: "required",

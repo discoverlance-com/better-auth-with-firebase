@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/sidebar";
 import { siteInfo, siteLinks } from "@/config/site";
 import Link from "next/link";
-import { CogIcon, LayoutDashboardIcon } from "lucide-react";
+import { CogIcon, LayoutDashboardIcon, UserCircleIcon } from "lucide-react";
 
 const data = {
   navMain: [
@@ -33,7 +33,7 @@ const data = {
     {
       title: "Account",
       url: siteLinks.dashoard.account,
-      icon: CogIcon,
+      icon: UserCircleIcon,
     },
   ],
 };
