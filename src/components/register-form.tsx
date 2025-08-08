@@ -96,6 +96,7 @@ export function RegisterForm({
                     variant="outline"
                     className="w-full"
                     type="button"
+                    disabled={form.formState.isSubmitting}
                     onClick={signUpWithGithub}
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -110,6 +111,7 @@ export function RegisterForm({
                     variant="outline"
                     className="w-full"
                     type="button"
+                    disabled={form.formState.isSubmitting}
                     onClick={signUpWithGoogle}
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">

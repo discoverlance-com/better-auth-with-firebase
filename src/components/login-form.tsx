@@ -84,6 +84,31 @@ export function LoginForm({
     });
   };
 
+  async function handleSignInWithPasskey() {
+    const email = form.getValues("email");
+
+    if (email) {
+      await authClient.signIn.passkey({
+        email: email,
+        fetchOptions: {
+          onSuccess(ctx) {
+            toast.success(
+              `Welcome to Better Auth with Firebase, ${ctx.data?.user?.name}`
+            );
+            router.push(siteLinks.dashoard.index);
+          },
+          onError: ({ error }) => {
+            toast.error(error.message || "An error occurred");
+          },
+        },
+      });
+      return;
+    }
+    // focus on email for user to enter
+    form.setFocus("email");
+    toast.error("Please enter your email to sign in with passkey");
+  }
+
   useEffect(() => {
     authClient.oneTap({
       fetchOptions: {
@@ -108,7 +133,16 @@ export function LoginForm({
       return;
     }
 
-    void authClient.signIn.passkey({ autoFill: true });
+    void authClient.signIn.passkey({
+      autoFill: true,
+      fetchOptions: {
+        onError: ({ error }) => {
+          toast.error(error.message || "An error occurred", {
+            position: "top-center",
+          });
+        },
+      },
+    });
   }, []);
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -128,6 +162,7 @@ export function LoginForm({
                     variant="outline"
                     className="w-full"
                     type="button"
+                    disabled={form.formState.isSubmitting}
                     onClick={signInWithGithub}
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -142,6 +177,7 @@ export function LoginForm({
                     variant="outline"
                     className="w-full"
                     type="button"
+                    disabled={form.formState.isSubmitting}
                     onClick={signInWithGoogle}
                   >
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -230,6 +266,16 @@ export function LoginForm({
                       <Loader className="animate-spin mr-1" />
                     )}{" "}
                     Login
+                  </Button>
+
+                  <Button
+                    disabled={form.formState.isSubmitting}
+                    type="button"
+                    variant="outline"
+                    className="w-full -mt-2"
+                    onClick={handleSignInWithPasskey}
+                  >
+                    Login with Passkey
                   </Button>
                 </div>
                 <div className="text-center text-sm">

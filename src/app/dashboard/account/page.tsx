@@ -79,7 +79,7 @@ export default async function Page() {
                   </div>
                   {passkeys.length ? (
                     <ul
-                      className="mt-6 px-2 space-y-2 shadow border border-gray-200 rounded-sm overflow-hidden"
+                      className="mt-6 px-2 border border-gray-200 rounded-sm overflow-hidden"
                       title="passkeys"
                     >
                       {passkeys.map((passkey) => (
