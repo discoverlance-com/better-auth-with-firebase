@@ -21,6 +21,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { UpdateUserDetails } from "./update-user-details";
 
 export const metadata: Metadata = { title: "Account" };
 
@@ -50,7 +51,7 @@ async function deletePasskeyAction(formData: FormData) {
 }
 
 export default async function Page() {
-  await requireAuthentication();
+  const { user } = await requireAuthentication();
 
   const passkeys = await auth.api.listPasskeys({
     headers: await headers(),
@@ -149,6 +150,7 @@ export default async function Page() {
                   )}
                 </CardContent>
               </Card>
+              <UpdateUserDetails name={user.name} />
             </div>
           </div>
         </div>

@@ -70,6 +70,8 @@ export const requireAuthentication = cache(async () => {
   if (!session) {
     redirect(siteLinks.signin);
   }
+
+  return session;
 });
 
 export const requireAnonymousUser = cache(async () => {
